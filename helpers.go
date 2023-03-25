@@ -1,9 +1,11 @@
 package m74
 
+// Positive returns true if a value is positive or zero
 func Positive[T Real](v T) bool {
 	return v >= 0
 }
 
+// Negative returns true if a value if negative
 func Negative[T Real](v T) bool {
 	return v < 0
 }
