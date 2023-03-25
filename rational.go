@@ -1,5 +1,10 @@
 package m74
 
+import (
+	"fmt"
+	"math"
+)
+
 type Rational struct {
 	n int64
 	d int64
@@ -45,7 +50,7 @@ func (r Rational) Abs() Rational {
 func (r Rational) Simplify() Rational {
 	gcd := GCD(r.n, r.d)
 
-	if gcd == 1 {
+	if gcd == 1 || gcd == 0 {
 		return r
 	}
 
@@ -95,4 +100,57 @@ func (r Rational) Sub(s Rational) Rational {
 		n: r.n*s.d - s.n*r.d,
 		d: r.d * s.d,
 	}.Simplify()
+}
+
+func (r Rational) AsFloat64() float64 {
+	return float64(r.n) / float64(r.d)
+}
+
+func (r Rational) AsFloat32() float32 {
+	return float32(r.n) / float32(r.d)
+}
+
+func (r Rational) String() string {
+	return fmt.Sprintf("%d / %d", r.n, r.d)
+}
+
+func RationalApprox[T Real](v T, err float64) Rational {
+	if math.IsInf(float64(v), +1) {
+		return newRational(1, 0)
+	} else if math.IsInf(float64(v), -1) {
+		return newRational(-1, 0)
+	} else if math.IsNaN(float64(v)) {
+		return newRational(0, 0)
+	}
+
+	if err == -1 {
+		err = 0.000001
+	}
+
+	n := math.Floor(float64(v))
+	x := float64(v) - n
+
+	if x < err {
+		return newRational(int(n), 1)
+	} else if x > 1-err {
+		return newRational(int(n)+1, 1)
+	}
+
+	upper := newRational(0, 1)
+	lower := newRational(1, 1)
+
+	for {
+		mid := Rational{
+			n: upper.n + lower.n,
+			d: upper.d + lower.d,
+		}
+
+		if float64(mid.d)*(x+err) < float64(mid.n) {
+			lower = mid
+		} else if float64(mid.n) < (x-err)*float64(mid.d) {
+			upper = mid
+		} else {
+			return mid.Add(newRational(int(n), 1))
+		}
+	}
 }

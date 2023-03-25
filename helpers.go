@@ -116,5 +116,15 @@ func Abs[T Real](v T) T {
 
 // Lerp linearly interpolates between a and b.
 func Lerp[T Real](x float64, a, b T) T {
-	return T(float64(a)*(1-x) + float64(b)*x)
+	return T(x*float64(b-a) + float64(a))
+}
+
+// InvLerp Performs the inverse of Lerp
+func InvLerp[T Real](v, a, b T) float64 {
+	return float64(v-a) / float64(b-a)
+}
+
+// MapRange can be treated as Lerp(InvLerp(v, a0, b0), a1, b1)
+func MapRange[T Real](v, a0, b0, a1, b1 T) T {
+	return T((float64(v-a0)/float64(b0-a0))*float64(b1-a1) + float64(a1))
 }
