@@ -148,24 +148,24 @@ func (r Rational) Sub(s Rational) Rational {
 }
 
 func (r Rational) AsFloat64() float64 {
-	return float64(r.n) / float64(r.d)
+	return float64(r.N) / float64(r.D)
 }
 
 func (r Rational) AsFloat32() float32 {
-	return float32(r.n) / float32(r.d)
+	return float32(r.N) / float32(r.D)
 }
 
 func (r Rational) String() string {
-	return fmt.Sprintf("%d / %d", r.n, r.d)
+	return fmt.Sprintf("%d / %d", r.N, r.D)
 }
 
 func RationalApprox[T Real](v T, err float64) Rational {
 	if math.IsInf(float64(v), +1) {
-		return newRational(1, 0)
+		return NewRational(1, 0)
 	} else if math.IsInf(float64(v), -1) {
-		return newRational(-1, 0)
+		return NewRational(-1, 0)
 	} else if math.IsNaN(float64(v)) {
-		return newRational(0, 0)
+		return NewRational(0, 0)
 	}
 
 	if err == -1 {
@@ -176,26 +176,26 @@ func RationalApprox[T Real](v T, err float64) Rational {
 	x := float64(v) - n
 
 	if x < err {
-		return newRational(int(n), 1)
+		return NewRational(int(n), 1)
 	} else if x > 1-err {
-		return newRational(int(n)+1, 1)
+		return NewRational(int(n)+1, 1)
 	}
 
-	upper := newRational(0, 1)
-	lower := newRational(1, 1)
+	upper := NewRational(0, 1)
+	lower := NewRational(1, 1)
 
 	for {
 		mid := Rational{
-			n: upper.n + lower.n,
-			d: upper.d + lower.d,
+			N: upper.N + lower.N,
+			D: upper.D + lower.D,
 		}
 
-		if float64(mid.d)*(x+err) < float64(mid.n) {
+		if float64(mid.D)*(x+err) < float64(mid.N) {
 			lower = mid
-		} else if float64(mid.n) < (x-err)*float64(mid.d) {
+		} else if float64(mid.N) < (x-err)*float64(mid.D) {
 			upper = mid
 		} else {
-			return mid.Add(newRational(int(n), 1))
+			return mid.Add(NewRational(int(n), 1))
 		}
 	}
 }
