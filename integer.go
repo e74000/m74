@@ -11,10 +11,10 @@ func Factorial[T Natural](v T) T {
 	return prod
 }
 
-// NCR performs `n` choose `r`, or the number of ways you could select `r` items from a set of `n`
+// NCR performs `N` choose `r`, or the number of ways you could select `r` items from a set of `N`
 func NCR[T Natural](n, r T) T {
 	if r > n {
-		panic("n must be greater than r")
+		panic("N must be greater than r")
 	}
 
 	var (
