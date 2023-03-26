@@ -1,5 +1,6 @@
 package m74
 
+// Factorial performs an integer factorial of `v`
 func Factorial[T Natural](v T) T {
 	var prod T = 1
 
@@ -10,9 +11,10 @@ func Factorial[T Natural](v T) T {
 	return prod
 }
 
+// NCR performs `N` choose `r`, or the number of ways you could select `r` items from a set of `N`
 func NCR[T Natural](n, r T) T {
 	if r > n {
-		panic("n must be greater than r")
+		panic("N must be greater than r")
 	}
 
 	var (
@@ -32,6 +34,7 @@ func NCR[T Natural](n, r T) T {
 	return num / den
 }
 
+// GCD (Greatest Common Divisor) returns the largest integer divisor of `a` and `b`
 func GCD[T Integer](a, b T) T {
 	var (
 		p, q = a, b
@@ -44,6 +47,7 @@ func GCD[T Integer](a, b T) T {
 	return Max(p, -p)
 }
 
+// Mod is the modulo function
 func Mod[T Integer](n, d T) T {
 	return (n%d + d) % d
 }
