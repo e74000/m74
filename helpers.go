@@ -12,8 +12,12 @@ func Negative[T Real](v T) bool {
 
 // Max returns the maximum of a set of values
 func Max[T Real](vals ...T) (max T) {
+	if len(vals) == 0 {
+		return 0
+	}
+	
 	max = vals[0]
-	idx := -1
+	idx := 0
 
 	for i, v := range vals {
 		if v > max {
@@ -31,8 +35,12 @@ func Max[T Real](vals ...T) (max T) {
 
 // Min returns the minimum of a set of values
 func Min[T Real](vals ...T) (min T) {
+	if len(vals) == 0 {
+		return 0
+	}
+	
 	min = vals[0]
-	idx := -1
+	idx := 0
 
 	for i, v := range vals {
 		if v < min {
@@ -50,8 +58,12 @@ func Min[T Real](vals ...T) (min T) {
 
 // MaxIdx returns the index/value of the maximum from a set of values
 func MaxIdx[T Real](vals ...T) (max T, idx int) {
+	if len(vals) == 0 {
+		return 0
+	}
+	
 	max = vals[0]
-	idx = -1
+	idx = 0
 
 	for i, v := range vals {
 		if v > max {
@@ -69,8 +81,12 @@ func MaxIdx[T Real](vals ...T) (max T, idx int) {
 
 // MinIdx returns the index/value of the minimum from a set of values
 func MinIdx[T Real](vals ...T) (min T, idx int) {
+	if len(vals) == 0 {
+		return 0
+	}
+	
 	min = vals[0]
-	idx = -1
+	idx = 0
 
 	for i, v := range vals {
 		if v < min {
