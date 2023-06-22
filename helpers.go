@@ -26,10 +26,6 @@ func Max[T Real](vals ...T) (max T) {
 		}
 	}
 
-	if idx == -1 {
-		return 0
-	}
-
 	return max
 }
 
@@ -49,17 +45,13 @@ func Min[T Real](vals ...T) (min T) {
 		}
 	}
 
-	if idx == -1 {
-		return 0
-	}
-
 	return min
 }
 
 // MaxIdx returns the index/value of the maximum from a set of values
 func MaxIdx[T Real](vals ...T) (max T, idx int) {
 	if len(vals) == 0 {
-		return 0
+		return 0, 0
 	}
 	
 	max = vals[0]
@@ -72,17 +64,13 @@ func MaxIdx[T Real](vals ...T) (max T, idx int) {
 		}
 	}
 
-	if idx == -1 {
-		return 0, -1
-	}
-
 	return max, idx
 }
 
 // MinIdx returns the index/value of the minimum from a set of values
 func MinIdx[T Real](vals ...T) (min T, idx int) {
 	if len(vals) == 0 {
-		return 0
+		return 0, 0
 	}
 	
 	min = vals[0]
@@ -93,10 +81,6 @@ func MinIdx[T Real](vals ...T) (min T, idx int) {
 			min = v
 			idx = i
 		}
-	}
-
-	if idx == -1 {
-		return 0, -1
 	}
 
 	return min, idx
